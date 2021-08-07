@@ -1,5 +1,4 @@
 # Telgram env setup
-export BOT_API="1602913756:AAHEmD1b44yfi06YuAT-VR2cTCaTRx9nmt0"
 export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"
 
 tg_post_msg() {
@@ -11,11 +10,11 @@ tg_post_msg() {
 # sync rom
 repo init --depth=1 --no-repo-verify -u https://github.com/ArrowOS/android_manifest.git -b arrow-11.0 -g default,-device,-mips,-darwin,-notdefault
 git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b arrow .repo/local_manifests
-tg_post_msg "STARTING ArrowOS SYNC" "-1001521554007"
+tg_post_msg "STARTING ArrowOS SYNC" "$CHATID"
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 
 
-tg_post_msg "STARTING BUILD ArrowOS" "-1001521554007"
+tg_post_msg "STARTING BUILD ArrowOS" "$CHATID"
 # build rom
 . build/envsetup.sh
 lunch arrow_platina-userdebug
@@ -38,7 +37,7 @@ m bacon -j$(nproc --all)
 
 send_zip=$(up out/target/product/platina/*zip) 
 
-tg_post_msg "Build Succeed! $send_zip" "-1001521554007"
+tg_post_msg "Build Succeed! $send_zip" "$CHATID"
 
 ccache -s
 

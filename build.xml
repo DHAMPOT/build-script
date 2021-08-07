@@ -1,5 +1,6 @@
 # Telgram env setup
-export BOT_MSG_URL="https://api.telegram.org/bot 1602913756:AAHEmD1b44yfi06YuAT-VR2cTCaTRx9nmt0/sendMessage"
+export BOT_API="1602913756:AAHEmD1b44yfi06YuAT-VR2cTCaTRx9nmt0"
+export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"
 
 tg_post_msg() {
  curl -s -X POST "$BOT_MSG_URL" -d chat_id="-1001521554007" \

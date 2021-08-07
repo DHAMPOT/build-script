@@ -1,13 +1,25 @@
+# Telgram env setup
+export BOT_MSG_URL="https://api.telegram.org/bot 1602913756:AAHEmD1b44yfi06YuAT-VR2cTCaTRx9nmt0/sendMessage"
+
+tg_post_msg() {
+ curl -s -X POST "$BOT_MSG_URL" -d chat_id="-1001521554007" \
+ -d "parse_mode=html" \
+ -d text="$1"
+}
+
 # sync rom
 repo init --depth=1 --no-repo-verify -u https://github.com/ArrowOS/android_manifest.git -b arrow-11.0 -g default,-device,-mips,-darwin,-notdefault
 git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b arrow .repo/local_manifests
+tg_post_msg "STARTING ArrowOS SYNC" "-1001521554007"
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 
+
+tg_post_msg "STARTING BUILD ArrowOS" "-1001521554007"
 # build rom
 . build/envsetup.sh
 lunch arrow_platina-userdebug
 export SELINUX_IGNORE_NEVERALLOWS=true
-export ARROW_GAPPS=true
+# export ARROW_GAPPS=true
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta
@@ -21,14 +33,12 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-tg(){
-	curl -s "https://api.telegram.org/bot${1602913756:AAHEmD1b44yfi06YuAT-VR2cTCaTRx9nmt0}/sendmessage" --data "text=$msg&chat_id=${-1001521554007}"
-}
+m bacon -j$(nproc --all)
 
-id=1310272071
+send_zip=$(up out/target/product/platina/*zip) 
 
-m bacon -j$(nproc --all) \
-	&& send_zip=$(up out/target/product/platina/*zip) && tg $id "Build Succeed!
-$send_zip" \
+tg_post_msg "Build Succeed! $send_zip" "-1001521554007"
 
 ccache -s
+
+rm -rf .repo/local_manifests

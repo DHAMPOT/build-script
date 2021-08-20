@@ -17,11 +17,10 @@ tg_post_msg "STARTING ArrowOS SYNC" "$CHATID"
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 
 
-tg_post_msg "STARTING BUILD ArrowOS" "$CHATID"
+tg_post_msg "STARTING BUILD ArrowOS GAPPS" "$CHATID"
 # build rom
 . build/envsetup.sh
 lunch arrow_platina-userdebug
-# export SELINUX_IGNORE_NEVERALLOWS=true
 export ARROW_GAPPS=true
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true

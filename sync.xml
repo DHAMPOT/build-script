@@ -1,0 +1,18 @@
+# Telgram env setup
+export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"
+
+tg_post_msg() {
+ curl -s -X POST "$BOT_MSG_URL" -d chat_id="-1001521554007" \
+ -d "parse_mode=html" \
+ -d text="$1"
+}
+
+# sync rom
+repo init --depth=1 --no-repo-verify -u https://github.com/Wave-Project/manifest -b r -g default,-device,-mips,-darwin,-notdefault
+git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b wave .repo/local_manifests
+tg_post_msg "STARTING WaveOS SYNC" "$CHATID"
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
+
+cd ~/wave/vendor/wave
+git fetch https://github.com/PixelExtended/vendor_aosp ace && git cherry-pick 41aa4288f6ec1c156eec96dcc9641597f5cd036c
+cd ~/wave

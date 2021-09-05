@@ -1,5 +1,5 @@
 # make clean
-rm -rf out/target/product/platina
+# rm -rf out/target/product/platina
 
 # Telgram env setup
 export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"
@@ -10,22 +10,13 @@ tg_post_msg() {
  -d text="$1"
 }
 
-# sync rom
-repo init --depth=1 --no-repo-verify -u https://github.com/ArrowOS/android_manifest.git -b arrow-11.0 -g default,-device,-mips,-darwin,-notdefault
-git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b arrow .repo/local_manifests
-tg_post_msg "STARTING ArrowOS SYNC" "$CHATID"
-repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
-
-
-tg_post_msg "STARTING BUILD ArrowOS GAPPS" "$CHATID"
+tg_post_msg "STARTING BUILD WaveOS GAPPS" "$CHATID"
 # build rom
-. build/envsetup.sh
-lunch arrow_platina-userdebug
-export ARROW_GAPPS=true
+source build/envsetup.sh
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta
-export CCACHE_DIR=~/ccache
+export CCACHE_DIR=~/ccachewave
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 ccache -M 10G
@@ -35,7 +26,7 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-m bacon -j$(nproc --all)
+brunch platina
 
 send_zip=$(up out/target/product/platina/*zip) 
 

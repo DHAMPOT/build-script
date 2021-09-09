@@ -8,19 +8,12 @@ tg_post_msg() {
  -d text="$1"
 }
 
-# sync rom
-repo init --depth=1 --no-repo-verify -u git://github.com/ForkLineageOS/android.git -b lineage-18.1 -g default,-device,-mips,-darwin,-notdefault
-git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b flos .repo/local_manifests
-tg_post_msg "STARTING Fork Lineage  SYNC" "$CHATID"
-repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
-
-
 tg_post_msg "STARTING BUILD Fork Lineage GAPPS" "$CHATID"
 # build rom
 source build/envsetup.sh
 lunch lineage_platina-userdebug
 export TARGET_FLOS=true
-export WITH_GAPPS=true
+export WITH_GMS=true
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta

@@ -10,13 +10,14 @@ tg_post_msg() {
  -d text="$1"
 }
 
-tg_post_msg "STARTING BUILD WaveOS GAPPS" "$CHATID"
+tg_post_msg "STARTING BUILD Xperience" "$CHATID"
 # build rom
-source build/envsetup.sh
+. build/envsetup.sh
+lunch xperience_platina-userdebug
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta
-export CCACHE_DIR=~/ccachewave
+export CCACHE_DIR=~/ccachexpe
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 ccache -M 10G
@@ -26,7 +27,7 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-brunch platina
+make bacon -j$(nproc --all)
 
 send_zip=$(up out/target/product/platina/*zip) 
 
@@ -34,4 +35,3 @@ tg_post_msg "Build Succeed! $send_zip" "$CHATID"
 
 ccache -s
 
-rm -rf .repo/local_manifests

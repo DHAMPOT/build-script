@@ -8,11 +8,11 @@ tg_post_msg() {
 }
 
 # sync rom
-repo init --depth=1 --no-repo-verify -u https://github.com/TheXPerienceProject/Manifest -b xpe-15.0 -g default,-device,-mips,-darwin,-notdefault
-git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b xpe .repo/local_manifests
-tg_post_msg "STARTING Xperience SYNC" "$CHATID"
+repo init --depth=1 --no-repo-verify -u https://github.com/cygnus-rom/manifest.git -b caf-11 -g default,-device,-mips,-darwin,-notdefault
+git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b cygnus .repo/local_manifests
+tg_post_msg "STARTING CygnusOS SYNC" "$CHATID"
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 
-cd ~/xpe/vendor/xperience
+cd ~/cygnus/vendor/cygnus
 git fetch https://github.com/PixelExtended/vendor_aosp ace && git cherry-pick 41aa4288f6ec1c156eec96dcc9641597f5cd036c
-cd ~/xpe
+cd ~/cygnus

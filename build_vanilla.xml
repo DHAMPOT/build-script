@@ -1,3 +1,5 @@
+# Make clean
+rm -rf out/target/product/platina
 
 # Telgram env setup
 export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"

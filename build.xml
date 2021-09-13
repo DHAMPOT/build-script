@@ -30,6 +30,6 @@ up(){
 make cygnus -j$(nproc --all) | tee build-log.txt \
 	&& send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "Build Succeed! 
 $send_zip" "CHATID" \
-	|| send_log=$(up build-log.txt) tg_post_msg "Build Failed! $send_log" && ccache -s 
+	|| send_log=$(up build-log.txt) && tg_post_msg "Build Failed! $send_log" && ccache -s 
 ccache -s
 

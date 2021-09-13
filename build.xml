@@ -30,6 +30,6 @@ up(){
 make cygnus -j$(nproc --all) \
 	&& send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "Build Succeed! 
 $send_zip" "CHATID" \
-	|| tg_post_msg "Build Failed!" && ccache -s 
+	|| tg_post_msg "Build Failed! sed -n '/FAILED:/,//p' filelog" && ccache -s 
 ccache -s
 

@@ -1,5 +1,5 @@
 # make clean
-# rm -rf out/target/product/platina
+rm -rf out/target/product/platina
 
 # Telgram env setup
 export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"
@@ -13,7 +13,8 @@ tg_post_msg() {
 tg_post_msg "STARTING BUILD Xperience" "$CHATID"
 # build rom
 . build/envsetup.sh
-lunch xperience_platina-userdebug
+lunch xperience_platina-eng
+export SELINUX_IGNORE_NEVERALLOWS=true
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta

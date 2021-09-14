@@ -27,11 +27,10 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-make bacon -j$(nproc --all)
-
-send_zip=$(up out/target/product/platina/*zip) 
-
-tg_post_msg "Build Succeed! $send_zip" "$CHATID"
-
+make bacon -j$(nproc --all) \
+	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "Build Succeed!
+$send_zip" "$CHATID" \
+	|| tg_post_msg "Build Failed, @TacticalDad please check console" "$CHATID" && ccache -s
+	
 ccache -s
 

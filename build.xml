@@ -1,3 +1,6 @@
+DISTRO=$(cat /etc/issue)
+KBUILD_BUILD_HOST=$(uname -a | awk '{print $2}')
+
 # Make clean
 rm -rf out/target/product/platina
 
@@ -10,11 +13,9 @@ tg_post_msg() {
  -d text="$1"
 }
 
-tg_post_msg "STARTING BUILD Fork Lineage Vanilla" "$CHATID"
+tg_post_msg "<b>STARTING BUILD StatixOS</b>%OA<b>Linux OS: </b><code>$DISTRO</code>%OA<b>Date: </b><code>$(TZ=Asia/Jakarta date)</code>%OA<b>HOST: </b><code>$KBUILD_BUILD_HOST</code>" "$CHATID"
 # build rom
-source build/envsetup.sh
-lunch lineage_platina-userdebug
-export TARGET_FLOS=true
+. build/envsetup.sh
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta
@@ -28,12 +29,8 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-make bacon -j$(nproc --all)
-
-send_zip=$(up out/target/product/platina/*zip) 
-
-tg_post_msg "Build Succeed! $send_zip" "$CHATID"
-
+brunch statix_platina-userdebug \
+	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>Build Succeed!!<b>
+$send_zip" "$CHATID" \
+	|| tg_post_msg "<b>Build Failed!!<b>%OA<b>@TacticalDad check build log !!<b>" "$CHATID" && ccache -s
 ccache -s
-
-rm -rf .repo/local_manifests

@@ -13,9 +13,10 @@ tg_post_msg() {
  -d text="$1"
 }
 
-tg_post_msg "<b>STARTING BUILD StatixOS</b>%OA<b>Linux OS: </b><code>$DISTRO</code>%OA<b>Date: </b><code>$(TZ=Asia/Jakarta date)</code>%OA<b>HOST: </b><code>$KBUILD_BUILD_HOST</code>" "$CHATID"
+tg_post_msg "<b>STARTING BUILD StatixOS</b>%0A<b>Linux OS: </b><code>$DISTRO</code>%0A<b>Date: </b><code>$(TZ=Asia/Jakarta date)</code>%0A<b>HOST: </b><code>$KBUILD_BUILD_HOST</code>" "$CHATID"
 # build rom
 . build/envsetup.sh
+lunch statix_platina-userdebug
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta
@@ -29,7 +30,7 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-brunch statix_platina-userdebug \
+make bacon -j$(nproc --all) \
 	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>Build Succeed!!<b>
 $send_zip" "$CHATID" \
 	|| tg_post_msg "<b>Build Failed!!<b>%OA<b>@TacticalDad check build log !!<b>" "$CHATID" && ccache -s

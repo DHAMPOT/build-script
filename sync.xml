@@ -1,3 +1,4 @@
+rm -rf .repo/local_manifests
 # Telgram env setup
 export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"
 
@@ -10,5 +11,7 @@ tg_post_msg() {
 # sync rom
 repo init --depth=1 --no-repo-verify -u git://github.com/ForkLineageOS/android.git -b lineage-18.1 -g default,-device,-mips,-darwin,-notdefault
 git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b flos .repo/local_manifests
-tg_post_msg "STARTING Fork Lineage  SYNC" "$CHATID"
+tg_post_msg "<b>STARTING Fork Lineage SYNC<b>" "$CHATID"
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
+
+tg_post_msg "<b>SYNC Successful<b>" "$CHATID"

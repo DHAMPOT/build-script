@@ -1,6 +1,5 @@
-rm -rf ~/statix/vendor/statix
-rm -rf ~/statix/.repo/local_manifests
-
+rm -rf vendor/xdroid
+rm -rf .repo/local_manifests
 # Telgram env setup
 export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"
 
@@ -11,12 +10,13 @@ tg_post_msg() {
 }
 
 # sync rom
-repo init --depth=1 --no-repo-verify -u https://github.com/StatiXOS/android_manifest.git -b 11 -g default,-device,-mips,-darwin,-notdefault
-git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b statix .repo/local_manifests
-tg_post_msg "STARTING StatixOS SYNC" "$CHATID"
+repo init --depth=1 --no-repo-verify -u https://github.com/xdroid-CAF/xd_manifest.git -b eleven -g default,-device,-mips,-darwin,-notdefault
+git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b xdroid .repo/local_manifests
+tg_post_msg "<b>🛠️STARTING Xdroid-CAF SYNC🛠️</b>" "$CHATID"
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 
-cd ~/statix/vendor/statix
+cd ~/xd/vendor/xdroid
 git fetch https://github.com/PixelExtended/vendor_aosp ace && git cherry-pick 41aa4288f6ec1c156eec96dcc9641597f5cd036c
-cd ~/statix
-tg_post_msg "StatixOS SYNC Finished" "$CHATID"
+cd ~/xd
+
+tg_post_msg "<b>✅SYNC Successful✅</b>" "$CHATID"

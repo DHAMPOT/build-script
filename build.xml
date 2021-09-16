@@ -1,7 +1,8 @@
+# Setup
 DISTRO=$(cat /etc/issue)
 KBUILD_BUILD_HOST=$(uname -a | awk '{print $2}')
 
-# Make clean
+# Make Clean
 rm -rf out/target/product/platina
 
 # Telgram env setup
@@ -13,14 +14,14 @@ tg_post_msg() {
  -d text="$1"
 }
 
-tg_post_msg "<b>STARTING BUILD StatixOS</b>%0A<b>Linux OS: </b><code>$DISTRO</code>%0A<b>Date: </b><code>$(TZ=Asia/Jakarta date)</code>%0A<b>HOST: </b><code>$KBUILD_BUILD_HOST</code>" "$CHATID"
+tg_post_msg "<b>🛠️STARTING BUILD Xdroid-CAF🛠️</b>%0A<b>🖥️Linux OS: </b><code>$DISTRO</code>%0A<b>🖥️Core : </b><code>$(nproc --all)</code>%0A<b>🖥️HOST: </b><code>$KBUILD_BUILD_HOST</code>%0A<b>⌛Date: </b><code>$(TZ=Asia/Jakarta date)</code>" "$CHATID"
 # build rom
 . build/envsetup.sh
-lunch statix_platina-userdebug
+lunch xdroid_platina-userdebug
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta
-export CCACHE_DIR=~/ccacheflos
+export CCACHE_DIR=~/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 ccache -M 10G
@@ -30,8 +31,8 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-make bacon -j$(nproc --all) \
-	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>Build Succeed!!<b>
-$send_zip" "$CHATID" \
-	|| tg_post_msg "<b>Build Failed!!<b>%OA<b>@TacticalDad check build log !!<b>" "$CHATID" && ccache -s
+make xd -j$(nproc --all) \
+	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>✅Build Succeed!✅</b><code>$send_zip</code>" "$CHATID" \
+	|| tg_post_msg "<b>⚠️Build Failed!!⚠️</b>%0A<b>@TacticalDad please check console</b>" "$CHATID" && ccache -s
+	
 ccache -s

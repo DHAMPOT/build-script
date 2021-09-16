@@ -18,6 +18,7 @@ tg_post_msg "<b>🛠️STARTING BUILD Xdroid-CAF🛠️</b>%0A<b>🖥️Linux OS
 # build rom
 . build/envsetup.sh
 lunch xdroid_platina-userdebug
+export SELINUX_IGNORE_NEVERALLOWS=true
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta

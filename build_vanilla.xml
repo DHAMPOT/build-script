@@ -33,8 +33,7 @@ up(){
 }
 
 make bacon -j$(nproc --all) \
-	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>✅Build Succeed!✅</b>%0A
-$send_zip" "$CHATID" \
+	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>✅Build Succeed!✅</b>%0A<url>$send_zip</url>" "$CHATID" \
 	|| tg_post_msg "<b>⚠️Build Failed!!⚠️</b>%0A<b>@TacticalDad please check console</b>" "$CHATID" && ccache -s
 	
 ccache -s

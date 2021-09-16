@@ -14,7 +14,7 @@ tg_post_msg() {
  -d text="$1"
 }
 
-tg_post_msg "<b>STARTING BUILD Fork LineageOS Vanilla</b>%0A<b>Linux OS: </b><code>$DISTRO</code>%0A<b>Core : </b><code>$PROCS</core>%0A<b>HOST: </b><code>$KBUILD_BUILD_HOST</code>%0A<b>Date: </b><code>$(TZ=Asia/Jakarta date)</code>" "$CHATID"
+tg_post_msg "<b>🛠️STARTING BUILD Fork LineageOS Vanilla🛠️</b>%0A<b>🖥️Linux OS: </b><code>$DISTRO</code>%0A<b>🖥️Core : </b><code>$PROCS</code>%0A<b>🖥️HOST: </b><code>$KBUILD_BUILD_HOST</code>%0A<b>⌛Date: </b><code>$(TZ=Asia/Jakarta date)</code>" "$CHATID"
 # build rom
 source build/envsetup.sh
 lunch lineage_platina-userdebug
@@ -33,8 +33,8 @@ up(){
 }
 
 make bacon -j$(nproc --all) \
-	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>Build Succeed!<b>%0A
+	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>✅Build Succeed!✅</b>%0A
 $send_zip" "$CHATID" \
-	|| tg_post_msg "<b>Build Failed!!<b>%0A<b>@TacticalDad please check console<b>" "$CHATID" && ccache -s
+	|| tg_post_msg "<b>⚠️Build Failed!!⚠️</b>%0A<b>@TacticalDad please check console</b>" "$CHATID" && ccache -s
 	
 ccache -s

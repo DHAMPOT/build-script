@@ -1,4 +1,8 @@
-# make clean
+# Setup
+DISTRO=$(cat /etc/issue)
+KBUILD_BUILD_HOST=$(uname -a | awk '{print $2}')
+
+# Make Clean
 rm -rf out/target/product/platina
 
 # Telgram env setup
@@ -10,14 +14,7 @@ tg_post_msg() {
  -d text="$1"
 }
 
-# sync rom
-repo init --depth=1 --no-repo-verify -u https://github.com/ArrowOS/android_manifest.git -b arrow-11.0 -g default,-device,-mips,-darwin,-notdefault
-git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b arrow .repo/local_manifests
-tg_post_msg "STARTING ArrowOS SYNC" "$CHATID"
-repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
-
-
-tg_post_msg "STARTING BUILD ArrowOS VANILLA" "$CHATID"
+tg_post_msg "<b>🛠️STARTING BUILD ArrowOS Vanilla🛠️</b>%0A<b>🖥️Linux OS: </b><code>$DISTRO</code>%0A<b>🖥️Core : </b><code>$(nproc --all)</code>%0A<b>🖥️HOST: </b><code>$KBUILD_BUILD_HOST</code>%0A<b>⌛Date: </b><code>$(TZ=Asia/Jakarta date)</code>" "$CHATID"
 # build rom
 . build/envsetup.sh
 lunch arrow_platina-userdebug
@@ -34,12 +31,8 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-m bacon -j$(nproc --all)
-
-send_zip=$(up out/target/product/platina/*zip) 
-
-tg_post_msg "Build Succeed! $send_zip" "$CHATID"
-
+m bacon -j$(nproc --all) \
+	send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>✅Build Succeed!✅</b>%0A<b>$send_zip</b>" "$CHATID" \
+	|| tg_post_msg "<b>⚠️Build Failed!!⚠️</b>%0A<b>@TacticalDad please check console</b>" "$CHATID" && ccache -s
+	
 ccache -s
-
-rm -rf .repo/local_manifests

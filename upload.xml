@@ -12,4 +12,4 @@ up(){
 	curl --upload-file $1 https://transfer.sh/$(basename $1); echo
 }
 
-send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>✅Build Succeed!✅</b>%0A<code>$send_zip</code>" "$CHATID"
+send_zip=$(up out/target/product/platina/*zip) && tg_post_msg "<b>$send_zip</b>" "$CHATID"

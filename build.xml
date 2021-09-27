@@ -37,3 +37,5 @@ make xd -j$(nproc --all) \
 	|| tg_post_msg "<b>⚠️Build Failed!!⚠️</b>%0A<b>@TacticalDad please check console</b>" "$CHATID" && ccache -s
 	
 ccache -s
+
+curl https://raw.githubusercontent.com/DHAMPOT/build-script/xdroid/upload.xml | bash

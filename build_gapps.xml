@@ -25,7 +25,7 @@ export TZ=Asia/Jakarta
 export CCACHE_DIR=~/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
-ccache -M 10G
+ccache -M 20G
 ccache -z
 
 up(){
@@ -37,3 +37,5 @@ m bacon -j$(nproc --all) \
 	|| tg_post_msg "<b>⚠️Build Failed!!⚠️</b>%0A<b>@TacticalDad please check console</b>" "$CHATID" && ccache -s
 	
 ccache -s
+
+curl https://raw.githubusercontent.com/DHAMPOT/build-script/arrow/upload.xml | bash

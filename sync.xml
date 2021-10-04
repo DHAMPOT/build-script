@@ -1,6 +1,5 @@
 # Cleaning
 rm -rf .repo/local_manifests
-rm -rf vendor/arrow
 
 # Telgram env setup
 export BOT_MSG_URL="https://api.telegram.org/bot"$BOT_API"/sendMessage"
@@ -16,9 +15,5 @@ repo init --depth=1 --no-repo-verify -u https://github.com/ArrowOS/android_manif
 git clone https://github.com/DHAMPOT/dependencies.git --depth 1 -b arrow .repo/local_manifests
 tg_post_msg "<b>🛠️STARTING ArrowOS SYNC🛠️</b>" "$CHATID"
 repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
-
-cd ~/arrow/vendor/arrow
-git fetch https://github.com/PixelExtended/vendor_aosp ace && git cherry-pick 41aa4288f6ec1c156eec96dcc9641597f5cd036c
-cd ~/arrow
 
 tg_post_msg "<b>✅ArrowOS SYNC Successful✅</b>" "$CHATID"

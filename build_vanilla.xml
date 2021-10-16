@@ -21,10 +21,10 @@ lunch arrow_platina-userdebug
 export SKIP_API_CHECK=true
 export SKIP_ABI_CHECK=true
 export TZ=Asia/Jakarta
-export CCACHE_DIR=~/ccache
+export CCACHE_DIR=~/arrow/ccache
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
-ccache -M 20G
+ccache -M 10G
 ccache -z
 
 up(){
